@@ -2,23 +2,23 @@
   "version": 2,
   "builds": [
     {
-      "src": "/",
+      "src": "/src",
       "use": "@vercel/static-build",
       "config": { "distDir": "build" }
     },
     {
-      "src": "/src/components/PasswordGenerator.py",
+      "src": "/src/components/app.py",
       "use": "@vercel/python"
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/src/components/PasswordGenerator.py"
+      "dest": "/src/components/app.py"
     },
     {
       "src": "/(.*)",
-      "dest": "/build/$1"
+      "dest": "/src/$1"
     }
   ]
 }
