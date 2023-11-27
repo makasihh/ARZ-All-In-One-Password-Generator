@@ -12,6 +12,11 @@ nltk.download("words")
 english_words = set(words.words())
 
 
+@app.route("/")
+def home():
+    return "ARZ ALL IN ONE PASSWORD GENERATOR BACKEND"
+
+
 @app.route("/generate-password", methods=["POST"])
 def generate_password():
     data = request.get_json()
