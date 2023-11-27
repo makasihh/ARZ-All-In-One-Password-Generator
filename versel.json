@@ -1,10 +1,10 @@
 {
   "version": 2,
   "builds": [
-    { "src": "./src/components/PasswordGenerator.py", "use": "@vercel/python" }
+    { "src": "src/components/PasswordGenerator.py", "use": "@vercel/python" }
   ],
   "routes": [
     { "handle": "filesystem" },
-    { "src": "/(.*)", "dest": "./src/components/PasswordGenerator.py" }
+    { "src": "/(.*)", "dest": "src/components/PasswordGenerator.py" }
   ]
 }
