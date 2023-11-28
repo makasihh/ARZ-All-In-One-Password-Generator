@@ -60,6 +60,7 @@ const App = () => {
 
   const generatePassword = async () => {
     const response = await fetch(
+      // change the url with your own backend url
       "https://arz-aiopgb.vercel.app/generate-password",
       {
         method: "POST",
