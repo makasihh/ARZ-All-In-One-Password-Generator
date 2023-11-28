@@ -37,6 +37,7 @@ const App = () => {
       setIncludeNumbersPercent(value);
     }
   };
+  ``;
 
   const handleIncludeSymbolsPercentChange = (
     e: React.ChangeEvent<HTMLSelectElement>
