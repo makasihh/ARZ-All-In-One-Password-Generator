@@ -1,15 +1,15 @@
+import os
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from random import choice
 import string
 import nltk
-from nltk.corpus import words
 
 app = Flask(__name__)
 CORS(app)
 
-nltk.download("words")
-english_words = set(words.words())
+nltk_data_path = os.path.join(os.path.dirname(__file__), "nltk_data")
+nltk.data.path.append(nltk_data_path)
 
 
 @app.route("/")
