@@ -60,7 +60,7 @@ const App = () => {
 
   const generatePassword = async () => {
     const response = await fetch(
-      // change the url with your own backend url
+      // change the url wit your flask url
       "https://arz-aiopgb.vercel.app/generate-password",
       {
         method: "POST",
