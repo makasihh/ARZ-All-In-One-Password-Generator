@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./index.css";
 
 const App = () => {
   const [password, setPassword] = useState<string>("");
-  const [passwordLength, setPasswordLength] = useState<number>(12);
+  const [passwordLength, setPasswordLength] = useState<number>(8); // Set initial value to 8
+  const [passwordLabel, setPasswordLabel] = useState<string>("Password Length");
   const [includeNumbers, setIncludeNumbers] = useState<boolean>(true);
   const [includeSymbols, setIncludeSymbols] = useState<boolean>(true);
   const [includeUppercase, setIncludeUppercase] = useState<boolean>(true);
@@ -16,6 +17,11 @@ const App = () => {
   const [includeMemorable, setIncludeMemorable] = useState<boolean>(false);
   const [memorableSeparator, setMemorableSeparator] = useState<string>("-");
   const memorableSeparators = ["-", ".", "+", "/", ":", ">", "<", "&"];
+
+  useEffect(() => {
+    // Update password length when the component mounts based on includeMemorable status
+    setPasswordLength(includeMemorable ? 3 : 8);
+  }, [includeMemorable]);
 
   const handleMemorableSeparatorChange = (
     e: React.ChangeEvent<HTMLSelectElement>
@@ -52,29 +58,32 @@ const App = () => {
   };
 
   const generatePassword = async () => {
-    const response = await fetch("http://localhost:5000/generate-password", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        length: passwordLength,
-        includeNumbers: includeNumbers && !includeMemorable,
-        includeSymbols: includeSymbols && !includeMemorable,
-        includeUppercase: includeUppercase && !includeMemorable,
-        includeLowercase: includeLowercase && !includeMemorable,
-        includeNumbersPercent:
-          includeNumbersPercent === 100 && !includeMemorable
-            ? 100
-            : includeNumbersPercent,
-        includeSymbolsPercent:
-          includeSymbolsPercent === 100 && !includeMemorable
-            ? 100
-            : includeSymbolsPercent,
-        includeMemorable: includeMemorable,
-        memorableSeparator: includeMemorable ? memorableSeparator : null,
-      }),
-    });
+    const response = await fetch(
+      "https://arz-aiopgb.vercel.app/generate-password",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          length: passwordLength,
+          includeNumbers: includeNumbers && !includeMemorable,
+          includeSymbols: includeSymbols && !includeMemorable,
+          includeUppercase: includeUppercase && !includeMemorable,
+          includeLowercase: includeLowercase && !includeMemorable,
+          includeNumbersPercent:
+            includeNumbersPercent === 100 && !includeMemorable
+              ? 100
+              : includeNumbersPercent,
+          includeSymbolsPercent:
+            includeSymbolsPercent === 100 && !includeMemorable
+              ? 100
+              : includeSymbolsPercent,
+          includeMemorable: includeMemorable,
+          memorableSeparator: includeMemorable ? memorableSeparator : null,
+        }),
+      }
+    );
     const data = await response.json();
     setPassword(data.password);
 
@@ -101,7 +110,9 @@ const App = () => {
     setIncludeUppercase(true);
     setIncludeLowercase(true);
     // Reset Password Length based on includeMemorable status
-    setPasswordLength(includeMemorable ? 3 : 12);
+    setPasswordLength(includeMemorable ? 3 : 8);
+    // Update password label based on includeMemorable status
+    setPasswordLabel(includeMemorable ? "Password Length" : "Words");
   };
 
   return (
@@ -111,7 +122,7 @@ const App = () => {
       </h1>
       <div className="mb-4">
         <label className="text-lg text-gray-700 block mb-2">
-          Password Length: {passwordLength}
+          {passwordLabel}: {passwordLength}
         </label>
         <input
           type="range"
