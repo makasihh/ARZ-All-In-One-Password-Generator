@@ -14,7 +14,19 @@ nltk.data.path.append(nltk_data_path)
 
 @app.route("/")
 def home():
-    return "ARZ ALL IN ONE PASSWORD GENERATOR BACKEND"
+    return """
+    ARZ ALL IN ONE PASSWORD GENERATOR BACKEND
+    <p>
+        <a href="https://arz-all-in-one-password-generator.vercel.app/" target="_blank">
+        GO TO THE FRONT END
+        </a>
+    </p>
+    <p>
+        <a href="https://github.com/mfahmiarz/ARZ-All-In-One-Password-Generator" target="_blank">
+        GO TO THE REPOSITORY
+        </a>
+    </p>
+    """
 
 
 @app.route("/generate-password", methods=["POST"])
